@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>С 14 февраля 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #ffe6f0, #ffd6e8);
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 28px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+      max-width: 420px;
+      width: 100%;
+      padding: 26px 22px 30px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 18px;
+      color: #e75480;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      padding-top: 120%;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #f7f7f7;
+      margin-bottom: 18px;
+    }
+
+.img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: white;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.95);
+    }
+
+    .visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .pulse {
+      animation: pulse 0.35s ease;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 11px 18px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .open-btn {
+      background: linear-gradient(135deg, #f7a8c9, #f38fb8);
+      color: white;
+      box-shadow: 0 6px 16px rgba(243, 143, 184, 0.45);
+    }
+
+    .open-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(243, 143, 184, 0.6);
+    }
+
+    .secondary {
+      background: white;
+      color: #666;
+      border: 1px solid #ddd;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #888;
+      margin-top: 12px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>С 14 февраля,<br>любовушка моя 💗</h1>
+
+
+    <div class="card">
+      <img id="closed" class="img visible" src="images/image.png" alt="Жвачка Love Is">
+      <img id="opened" class="img hidden" src="" alt="Обёртка Love Is">
+    </div>
+
+    <div class="buttons">
+      <button id="openBtn" class="open-btn">Открыть жвачку</button>
+      <button id="againBtn" class="secondary" disabled>Открыть снова</button>
+      <button id="saveBtn" class="secondary" disabled>Скачать картинку</button>
+    </div>
+
+    <div class="hint">
+      Нажимай «Открыть снова», чтобы увидеть другую обёртку 💌
+    </div>
+  </div>
+
+  <script>
+    const wrappers = [
+      "wrappers/1.jpg","wrappers/2.jpg","wrappers/3.jpg","wrappers/4.jpg","wrappers/5.jpg",
+      "wrappers/6.jpg","wrappers/7.jpg","wrappers/8.jpg","wrappers/9.jpg","wrappers/10.jpg",
+      "wrappers/11.jpg","wrappers/12.jpg","wrappers/13.jpg","wrappers/14.jpg","wrappers/15.jpg",
+      "wrappers/16.jpg","wrappers/17.jpg","wrappers/18.jpg","wrappers/19.jpg","wrappers/20.jpg",
+      "wrappers/21.jpg","wrappers/22.jpg","wrappers/23.jpg","wrappers/24.jpg","wrappers/25.jpg",
+      "wrappers/26.jpg","wrappers/27.jpg","wrappers/28.jpg","wrappers/29.jpg","wrappers/30.jpg",
+      "wrappers/31.jpg","wrappers/32.jpg","wrappers/33.jpg","wrappers/34.jpg","wrappers/35.jpg",
+      "wrappers/36.jpg","wrappers/37.jpg","wrappers/38.jpg","wrappers/39.jpg","wrappers/40.jpg",
+      "wrappers/41.jpg"
+    ];
+
+    const closed = document.getElementById("closed");
+    const opened = document.getElementById("opened");
+    const openBtn = document.getElementById("openBtn");
+    const againBtn = document.getElementById("againBtn");
+    const saveBtn = document.getElementById("saveBtn");
+
+    let current = null;
+
+    function randomWrapper() {
+      return wrappers[Math.floor(Math.random() * wrappers.length)];
+    }
+
+    openBtn.addEventListener("click", () => {
+      current = randomWrapper();
+      opened.src = current;
+
+      closed.classList.add("hidden");
+      setTimeout(() => {
+        opened.classList.remove("hidden");
+        opened.classList.add("visible", "pulse");
+      }, 300);
+
+      openBtn.disabled = true;
+      againBtn.disabled = false;
+      saveBtn.disabled = false;
+    });
+
+    againBtn.addEventListener("click", () => {
+      current = randomWrapper();
+      opened.src = current;
+      opened.classList.add("pulse");
+      setTimeout(() => opened.classList.remove("pulse"), 350);
+    });
+
+    saveBtn.addEventListener("click", () => {
+      const a = document.createElement("a");
+      a.href = current;
+      a.download = "love-is.jpg";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+  </script>
+</body>
+</html>
